@@ -1,10 +1,28 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imageboard</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
+    <h1>Imageboard</h1>
+
+    <div id="main">
+        <h2>I miss everyone in {{name}}</h2>
+        <h2>2 * 2 {{2 * 2}}</h2>
+        <h2>Name capitalized: {{name.toUpperCase()}}</h2>
+        <h2 v-if='seen'>Can you see me????</h2>
+        <h2 v-else>'seen' is falsey if you see this!!</h2>
+        <ul>
+            <li v-for='city in cities' @click='myFunction'>
+                {{city.name}} is a city in {{city.country}}</li>
+        </ul>
+    </div>
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
