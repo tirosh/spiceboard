@@ -4,25 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imageboard</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700|Nunito:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
-    <h1>Imageboard</h1>
-
-    <div id="main">
-        <h2>I miss everyone in {{name}}</h2>
-        <h2>2 * 2 {{2 * 2}}</h2>
-        <h2>Name capitalized: {{name.toUpperCase()}}</h2>
-        <h2 v-if='seen'>Can you see me????</h2>
-        <h2 v-else>'seen' is falsey if you see this!!</h2>
-        <ul>
-            <li v-for='city in cities' @click='myFunction'>
-                {{city.name}} is a city in {{city.country}}</li>
-        </ul>
+<div id="main" v-cloak>
+    <header>
+        <h1>Imageboard</h1>
+        <form>
+            <div>
+                <input v-model="title" type="text" name="title" placeholder="title">
+                <input v-model="desc" type="text" name="desc" placeholder="description">    
+                <input v-model="user" type="text" name="user" placeholder="username">
+            </div>
+            <div>
+                <input @change='handleChange' type="file" name="file" accept="image/*">
+                <button @click="handleClick">submit</button>    
+            </div>
+        </form>
+    </header>
+    <div class="image-container">
+        <div class="card" v-for="image in images">
+            <!-- <h2>{{image.title}}</h2> -->
+            <div class="inner">
+                <div class="front">
+                    <img :src="image.url" :alt="image.id" width="300">
+                </div>
+                <div class="back">
+                    <div class="description">{{image.description}}</div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script src="/js/vue.js"></script>
-    <script src="/js/axios.min.js"></script>
-    <script src="/js/script.js"></script>
+</div>
+<script src="/js/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/script.js"></script>
 </body>
 </html>
