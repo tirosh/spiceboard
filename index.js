@@ -54,6 +54,19 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
         });
 });
 
+app.get('/image/:id', (req, res) => {
+    console.log('id: ', req.params.id);
+    db.getFocusData(req.params.id)
+        .then(result => {
+            console.log('Image from db: ', result.rows);
+            res.json(result.rows);
+        })
+        .catch(err => {
+            console.log('Error fetching image: ', err);
+            res.sendStatus(500);
+        });
+});
+
 app.use((err, req, res, next) => {
     res.status(500);
     res.render('error', { error: err });

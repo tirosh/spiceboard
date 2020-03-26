@@ -22,7 +22,7 @@ body {
 header {
     display: inline-flex;
     flex-wrap: wrap;
-    width: 100vw;
+    width: 100%;
 }
 header h1,
 header form {
@@ -108,4 +108,26 @@ input[type='text'] {
     transform: rotateY(180deg);
     box-shadow: 10px 10px 0px 0px hsla(0, 0%, 0%, 0.25);
     text-align: center;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: crimson;
+}
+
+.modal img {
+    width: 50%;
+}
+
+.modal .close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: black;
 }

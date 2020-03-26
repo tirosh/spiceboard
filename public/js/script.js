@@ -3,48 +3,42 @@ console.log(`I'm not insane...`);
     new Vue({
         el: '#main',
         components: {
-            'container-images': containerImages
+            'img-upload': imgUpload,
+            'img-card': imgCard,
+            'img-modal': imgModal
         },
         data: {
+            // imgId: location.hash.slice(1),
+            focusId: null,
             images: [],
-            title: '',
-            desc: '',
-            user: '',
-            file: null
-        }, // data ends
+            lastImageId: '',
+            pagecount: 0,
+            imageToUpload: {},
+            file: ''
+        },
+        mounted: function() {
+            console.log('this.imgId :', this.imgId);
+            var self = this;
+            axios
+                .get('/images')
+                .then(function(resp) {
+                    self.images = resp.data;
+                })
+                .catch(function(err) {
+                    console.log('Error in GET /images :', err);
+                });
+        },
         methods: {
-            handleImagesMounted: function(e) {
-                console.log('images in handleImagesMounted :', images);
-                self.images = images;
+            imgAdd: function(img) {
+                this.images.unshift(img);
             },
-            handleClick: function(e) {
-                e.preventDefault();
-                var self = this;
-
-                var formData = new FormData();
-                formData.append('title', this.title);
-                formData.append('desc', this.desc);
-                formData.append('user', this.user);
-                formData.append('file', this.file);
-
-                axios
-                    .post('/upload', formData)
-                    .then(function(resp) {
-                        console.log('resp.data :', resp.data);
-                        self.images.unshift(resp.data);
-                    })
-                    .catch(function(err) {
-                        console.log('err in POST /upload: ', err);
-                    });
+            imgSelect: function(id) {
+                this.focusId = id;
             },
-            closeModal: function(e) {
-                console.log('this in closeModal :', this);
-                this.id = null;
-            },
-            handleChange: function(e) {
-                this.file = e.target.files[0];
+            closeModal: function() {
+                this.focusId = null;
             }
-        } // methods ends
+        }
     });
 })();
 
