@@ -13,32 +13,90 @@
         <h1>Imageboard</h1>
         <form>
             <div>
+                <input @change='handleChange' type="file" name="file" accept="image/*">
+            </div>
+            <div>
                 <input v-model="title" type="text" name="title" placeholder="title">
                 <input v-model="desc" type="text" name="desc" placeholder="description">    
                 <input v-model="user" type="text" name="user" placeholder="username">
             </div>
             <div>
-                <input @change='handleChange' type="file" name="file" accept="image/*">
                 <button @click="handleClick">submit</button>    
             </div>
         </form>
     </header>
-    <div class="image-container">
-        <div class="card" v-for="image in images">
-            <!-- <h2>{{image.title}}</h2> -->
-            <div class="inner">
-                <div class="front">
-                    <img :src="image.url" :alt="image.id" width="300">
-                </div>
-                <div class="back">
-                    <div class="description">{{image.description}}</div>
-                </div>
+    <container-images></container-images>
+    <modal></modal>
+</div>
+
+<script id="tmpl-container-images" type="text/x-template">
+    <div class="container images" @imagesMounted="imagesMounted">
+        <card-image v-for="image in images" 
+            :id="image.id" 
+            :title="image.title" 
+            :desc="image.description" 
+            :url="image.url" 
+        ></card-image>
+    </div>
+</script>
+
+<script id="tmpl-card-image" type="text/x-template">
+    <div @click="select" :data="id" class="card image">
+        <div class="inner">
+            <div class="front">
+                <img :src="url" :alt="title" width="300">
+            </div>
+            <div class="back">
+                <div class="description">{{desc}}</div>
             </div>
         </div>
     </div>
-</div>
+</script>
+
+<script id="tmpl-modal" type="text/x-template">
+    <div class="modal" @click="pleaseCloseMe">
+    </div>
+</script>
+
+<!-- Attempt of an upload form component.
+<script id="tmpl-upload-image" type="text/x-template">
+    <div class="upload image">
+        <form>
+            <div>
+                <input @change='onSelect' type="file" name="file" accept="image/*">
+            </div>
+            <div>
+                <input v-model="title" type="text" name="title" placeholder="title">
+                <input v-model="desc" type="text" name="desc" placeholder="description">    
+                <input v-model="user" type="text" name="user" placeholder="username">
+            </div>
+            <div>
+                <button @click="onSubmit">submit</button>    
+            </div>
+        </form>
+    </div>
+</script> -->
+
+
+
+<!-- css fixed top=0, left=0, bottom=0, right=0
+    openModal 
+        - set data property in main instance (on click image currentImageId from null to id)
+        - when component mounts make axios request to get image with id
+        - the only prop is the id
+        - all other data is put into the data function
+    
+    new comments table
+        - image id, user, comment, id (primary key)
+
+    closing the modal seems to be an issue
+        - modal has to emit an event to tell parent to close the modal 
+        - parent must listen to this event (set image id to null)!
+-->
+
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>
+<script src="/js/component.js"></script>
 <script src="/js/script.js"></script>
 </body>
 </html>

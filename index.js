@@ -6,6 +6,8 @@ const s3 = require('./s3');
 const db = require('./db');
 const conf = require('./config');
 
+app.use(express.json());
+
 ///////// FILE UPLOAD BOILERPLATE //////////
 const multer = require('multer');
 const uidSafe = require('uid-safe');

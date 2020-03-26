@@ -30,7 +30,7 @@ header form {
 }
 
 header form div {
-    margin-bottom: 1em;
+    /* margin-bottom: 1em; */
 }
 
 input,
@@ -53,11 +53,11 @@ input[type='text'] {
 :focus {
     outline: none;
 }
-.image-container {
+.container.images {
     display: inline-flex;
     flex-wrap: wrap;
 }
-.card {
+.card.image {
     width: 300px;
     background-color: transparent;
     /* perspective: 200vw; */
@@ -75,8 +75,8 @@ input[type='text'] {
     top: 1em;
 }
 
-.card:hover > .inner {
-    transform: translateX(-100%) rotateY(180deg);
+.card.image:hover > .inner {
+    /* transform: translateX(-100%) rotateY(180deg); */
 }
 
 .front,
