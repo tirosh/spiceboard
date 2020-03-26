@@ -12,7 +12,7 @@ exports.getImages = () => {
     return db.query(q);
 };
 
-exports.getFocusData = id => {
+exports.getImage = id => {
     const q = `
         SELECT * FROM images
         WHERE id = $1 
@@ -20,11 +20,18 @@ exports.getFocusData = id => {
     return db.query(q, [id]);
 };
 
-// SIGN ADD /////////////////////////
 exports.addImage = (title, description, username, url) => {
     const q = `
         INSERT INTO images (title, description, username, url)
         VALUES ($1, $2, $3, $4)
         RETURNING *`;
     return db.query(q, [title, description, username, url]);
+};
+
+exports.addComment = (id, username, comment) => {
+    const q = `
+        INSERT INTO comments (img_id, username, comment)
+        VALUES ($1, $2, $3)
+        RETURNING *`;
+    return db.query(q, [id, username, comment]);
 };

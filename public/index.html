@@ -69,7 +69,7 @@
         <h4>{{img.description}}</h4>
         <p>Uploaded by {{img.username}} on {{img.created_at}}</p>
         <div @click="close" class="close"></div>
-        <add-comment></add-comment>
+        <add-comment :id="img.id"></add-comment>
         <!-- <comments 
             v-for="comment in comments" 
             :id="focusId"

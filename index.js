@@ -55,14 +55,28 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
 });
 
 app.get('/image/:id', (req, res) => {
-    console.log('id: ', req.params.id);
-    db.getFocusData(req.params.id)
+    // console.log('id: ', req.params.id);
+    db.getImage(req.params.id)
         .then(result => {
-            console.log('Image from db: ', result.rows);
+            // console.log('Image from db: ', result.rows);
             res.json(result.rows);
         })
         .catch(err => {
-            console.log('Error fetching image: ', err);
+            console.log('Error in GET /image/:id: ', err);
+            res.sendStatus(500);
+        });
+});
+
+app.post('/comment', (req, res) => {
+    const { id, user, comment } = req.body;
+    console.log('req.body :', req.body);
+    db.addComment(id, user, comment)
+        .then(comment => {
+            console.log('dbData.rows :', comment.rows);
+            res.json(comment.rows[0]);
+        })
+        .catch(err => {
+            console.log('Error in POST /comment: ', err);
             res.sendStatus(500);
         });
 });

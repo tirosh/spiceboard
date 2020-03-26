@@ -65,19 +65,19 @@ var addComment = {
         onSubmit: function(e) {
             e.preventDefault();
             var self = this;
-            var formData = new FormData();
-            formData.append('file', this.file);
-            formData.append('title', this.title);
-            formData.append('desc', this.desc);
-            formData.append('user', this.user);
             axios
-                .post('/upload', formData)
+                .post('/comment', {
+                    comment: self.comment,
+                    user: self.user,
+                    id: self.id
+                })
                 .then(function(resp) {
+                    console.log('resp.data :', resp.data);
                     // always use kebab-case for event names!!
-                    self.$emit('new-image', resp.data);
+                    // self.$emit('new-image', resp.data);
                 })
                 .catch(function(err) {
-                    console.log('err in POST /upload: ', err);
+                    console.log('err in POST /comment: ', err);
                 });
         },
         onSelect: function(e) {
