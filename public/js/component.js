@@ -1,3 +1,14 @@
+dateOptions = {
+    weekday: 'short',
+    // year: 'numeric',
+    // month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    dayPeriod: 'short',
+    minute: 'numeric'
+    // second: 'numeric'
+};
+
 var imgCard = {
     template: '#tmpl-img-card',
     props: { img: Object },
@@ -40,7 +51,7 @@ var imgUpload = {
                     self.$emit('new-image', resp.data);
                 })
                 .catch(function(err) {
-                    console.log('err in POST /upload: ', err);
+                    console.log('ERRR in POST /upload: ', err);
                 });
         },
         onSelect: function(e) {
@@ -49,22 +60,19 @@ var imgUpload = {
     }
 };
 
-// var imgComment = {
-//     template: '#tmpl-comment',
-//     props: { comment: Object }
-// };
-
-var addComment = {
-    template: '#tmpl-add-comment',
+var comments = {
+    template: '#tmpl-comments',
     props: { id: Number },
     data() {
         return {
+            user: '',
             comment: '',
-            user: ''
+            comments: Array
         };
     },
     mounted() {
         console.log('this.id :', this.id);
+        this.getComments();
     },
     methods: {
         onSubmit: function(e) {
@@ -78,15 +86,32 @@ var addComment = {
                 })
                 .then(function(resp) {
                     console.log('resp.data :', resp.data);
-                    // always use kebab-case for event names!!
-                    // self.$emit('new-image', resp.data);
+                    self.getComments();
                 })
                 .catch(function(err) {
-                    console.log('err in POST /comment: ', err);
+                    console.log('ERROR in POST /comment: ', err);
                 });
         },
         onSelect: function(e) {
             this.file = e.target.files[0];
+        },
+        getComments: function() {
+            var self = this;
+            axios
+                .get(`/comments/${self.id}`)
+                .then(function(comments) {
+                    console.log('Successfully got comments ', comments.data);
+                    self.comments = comments.data;
+                    for (let i = 0; i < self.comments.length; i++) {
+                        self.comments[i].created_at = new Intl.DateTimeFormat(
+                            'en-US',
+                            dateOptions
+                        ).format(new Date(self.comments[i].created_at));
+                    }
+                })
+                .catch(function(err) {
+                    console.log('ERROR in GET /comments: ', err);
+                });
         }
     }
 };
@@ -94,7 +119,7 @@ var addComment = {
 var imgModal = {
     template: '#tmpl-img-modal',
     components: {
-        'add-comment': addComment
+        'img-comments': comments
         // 'img-comment': imgComment
     },
     props: { id: Number }, // TODO: look into custom validation options
@@ -105,24 +130,13 @@ var imgModal = {
         };
     },
     mounted: function() {
-        console.log('this.id :', this.id);
+        // console.log('this.id :', this.id);
         var self = this;
-        Promise.all([
-            axios.get(`/image/${self.id}`).then(function(img) {
+        axios
+            .get(`/image/${self.id}`)
+            .then(function(img) {
                 // console.log('Successfully got image ', img.data[0]);
-                return img.data[0];
-            }),
-            axios.get(`/comments/${self.id}`).then(function(comments) {
-                // console.log('Successfully got comments ', comments.data);
-                return comments.data;
-            })
-        ])
-            .then(function(dbDataArr) {
-                console.log('dbDataArr :', dbDataArr);
-                self.img = dbDataArr[0];
-                self.comments = dbDataArr[1];
-                console.log('typeof dbDataArr[1] :', typeof dbDataArr[1]);
-                console.log('self.comments :', self.comments);
+                self.img = img.data[0];
             })
             .catch(function(err) {
                 console.log('Error getting image: ', err);
