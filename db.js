@@ -15,8 +15,8 @@ exports.getImages = () => {
 exports.getImage = id => {
     const q = `
         SELECT * FROM images
-        WHERE id = $1 
-        ORDER BY id DESC;`;
+        WHERE id = $1
+        ORDER BY id DESC`;
     return db.query(q, [id]);
 };
 
@@ -34,4 +34,12 @@ exports.addComment = (id, username, comment) => {
         VALUES ($1, $2, $3)
         RETURNING *`;
     return db.query(q, [id, username, comment]);
+};
+
+exports.getComments = id => {
+    const q = `
+        SELECT * FROM comments
+        WHERE img_id = $1
+        ORDER BY id DESC`;
+    return db.query(q, [id]);
 };

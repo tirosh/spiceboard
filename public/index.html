@@ -70,10 +70,13 @@
         <p>Uploaded by {{img.username}} on {{img.created_at}}</p>
         <div @click="close" class="close"></div>
         <add-comment :id="img.id"></add-comment>
-        <!-- <comments 
-            v-for="comment in comments" 
-            :id="focusId"
-        ></comments> -->
+        <div v-for="comment in comments">
+            <div>
+                <div class="comment">comment: {{comment.comment}}</div>
+                <div class="user">from user: {{comment.username}}</div>
+                <div class="user">date: {{comment.created_at}}</div>
+            </div>
+        </div>
     </div>
 </script>
 
@@ -87,7 +90,13 @@
         </form>
     </div>
 </script>
-
+<!-- 
+<script id="tmpl-comment" type="text/x-template">
+    <div>
+        <div class="comment">{{comment.comment}}</div>
+        <div class="user">{{comment.user}}</div>
+    </div>
+</script> -->
 
 <script src="/js/vue.js"></script>
 <script src="/js/axios.min.js"></script>

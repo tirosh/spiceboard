@@ -58,7 +58,7 @@ app.get('/image/:id', (req, res) => {
     // console.log('id: ', req.params.id);
     db.getImage(req.params.id)
         .then(result => {
-            // console.log('Image from db: ', result.rows);
+            console.log('Image from db: ', result.rows);
             res.json(result.rows);
         })
         .catch(err => {
@@ -77,6 +77,19 @@ app.post('/comment', (req, res) => {
         })
         .catch(err => {
             console.log('Error in POST /comment: ', err);
+            res.sendStatus(500);
+        });
+});
+
+app.get('/comments/:id', (req, res) => {
+    // console.log('id: ', req.params.id);
+    db.getComments(req.params.id)
+        .then(result => {
+            console.log('Comments from db: ', result.rows);
+            res.json(result.rows);
+        })
+        .catch(err => {
+            console.log('Error in GET /comments/:id: ', err);
             res.sendStatus(500);
         });
 });

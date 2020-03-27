@@ -49,6 +49,11 @@ var imgUpload = {
     }
 };
 
+// var imgComment = {
+//     template: '#tmpl-comment',
+//     props: { comment: Object }
+// };
+
 var addComment = {
     template: '#tmpl-add-comment',
     props: { id: Number },
@@ -90,6 +95,7 @@ var imgModal = {
     template: '#tmpl-img-modal',
     components: {
         'add-comment': addComment
+        // 'img-comment': imgComment
     },
     props: { id: Number }, // TODO: look into custom validation options
     data: function() {
@@ -101,11 +107,22 @@ var imgModal = {
     mounted: function() {
         console.log('this.id :', this.id);
         var self = this;
-        axios
-            .get(`/image/${self.id}`)
-            .then(function(img) {
-                console.log('Successfully got image ', img.data[0]);
-                self.img = img.data[0];
+        Promise.all([
+            axios.get(`/image/${self.id}`).then(function(img) {
+                // console.log('Successfully got image ', img.data[0]);
+                return img.data[0];
+            }),
+            axios.get(`/comments/${self.id}`).then(function(comments) {
+                // console.log('Successfully got comments ', comments.data);
+                return comments.data;
+            })
+        ])
+            .then(function(dbDataArr) {
+                console.log('dbDataArr :', dbDataArr);
+                self.img = dbDataArr[0];
+                self.comments = dbDataArr[1];
+                console.log('typeof dbDataArr[1] :', typeof dbDataArr[1]);
+                console.log('self.comments :', self.comments);
             })
             .catch(function(err) {
                 console.log('Error getting image: ', err);
