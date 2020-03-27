@@ -1,13 +1,12 @@
-dateOptions = {
-    weekday: 'short',
-    // year: 'numeric',
-    // month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    dayPeriod: 'short',
-    minute: 'numeric'
-    // second: 'numeric'
-};
+function formatDate(ISOstring) {
+    return new Intl.DateTimeFormat('en-US', {
+        weekday: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        dayPeriod: 'short',
+        minute: 'numeric'
+    }).format(new Date(ISOstring));
+}
 
 var imgCard = {
     template: '#tmpl-img-card',
@@ -84,8 +83,7 @@ var comments = {
                     user: self.user,
                     id: self.id
                 })
-                .then(function(resp) {
-                    console.log('resp.data :', resp.data);
+                .then(function() {
                     self.getComments();
                 })
                 .catch(function(err) {
@@ -98,15 +96,13 @@ var comments = {
         getComments: function() {
             var self = this;
             axios
-                .get(`/comments/${self.id}`)
+                .get('/comments/' + self.id)
                 .then(function(comments) {
-                    console.log('Successfully got comments ', comments.data);
                     self.comments = comments.data;
                     for (let i = 0; i < self.comments.length; i++) {
-                        self.comments[i].created_at = new Intl.DateTimeFormat(
-                            'en-US',
-                            dateOptions
-                        ).format(new Date(self.comments[i].created_at));
+                        self.comments[i].created_at = formatDate(
+                            self.comments[i].created_at
+                        );
                     }
                 })
                 .catch(function(err) {
@@ -120,23 +116,21 @@ var imgModal = {
     template: '#tmpl-img-modal',
     components: {
         'img-comments': comments
-        // 'img-comment': imgComment
     },
     props: { id: Number }, // TODO: look into custom validation options
     data: function() {
         return {
-            img: Object,
-            comments: Array
+            img: Object
+            // comments: Array
         };
     },
     mounted: function() {
-        // console.log('this.id :', this.id);
         var self = this;
         axios
             .get(`/image/${self.id}`)
             .then(function(img) {
-                // console.log('Successfully got image ', img.data[0]);
                 self.img = img.data[0];
+                self.img.created_at = formatDate(self.img.created_at);
             })
             .catch(function(err) {
                 console.log('Error getting image: ', err);

@@ -11,24 +11,38 @@ console.log(`I'm not insane...`);
             // imgId: location.hash.slice(1),
             focusId: null,
             images: [],
-            lastImageId: '',
+            lastImgId: 0,
             pagecount: 0,
             imageToUpload: {},
             file: ''
         },
         mounted: function() {
-            console.log('this.imgId :', this.imgId);
             var self = this;
             axios
                 .get('/images')
                 .then(function(resp) {
+                    console.log('resp.data :', resp.data);
                     self.images = resp.data;
+                    self.lastImgId = self.images[self.images.length - 1].id;
                 })
                 .catch(function(err) {
                     console.log('Error in GET /images :', err);
                 });
         },
         methods: {
+            getMoreImages: function() {
+                var self = this;
+                axios
+                    .get('/images/' + self.lastImgId)
+                    .then(function(resp) {
+                        console.log('resp.data :', resp.data);
+                        self.images = self.images.concat(resp.data);
+                        self.lastImgId = self.images[self.images.length - 1].id;
+                    })
+                    .catch(function(err) {
+                        console.log('Error in GET /images :', err);
+                    });
+            },
             imgAdd: function(img) {
                 this.images.unshift(img);
             },
