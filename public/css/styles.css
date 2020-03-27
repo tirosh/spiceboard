@@ -112,6 +112,10 @@ input[type='text'] {
 
 .moreImages {
     margin: 20px;
+    height: 1em;
+}
+
+.moreImages div {
     cursor: pointer;
 }
 

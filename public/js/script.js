@@ -24,14 +24,9 @@ console.log(`I'm not insane...`);
                 axios
                     .get('/images/' + self.lastImgId)
                     .then(function(imgs) {
-                        console.log('imgs.data :', imgs.data);
                         var lastImg = imgs.data[imgs.data.length - 1];
                         self.lowestId = lastImg.lowestId;
-                        console.log('lastImg.lowestId:', lastImg.lowestId);
-
-                        console.log('lastImgId before:', self.lastImgId);
                         self.lastImgId = lastImg.id;
-                        console.log('lastImgId after :', self.lastImgId);
                         self.images = self.images.concat(imgs.data);
                     })
                     .catch(function(err) {

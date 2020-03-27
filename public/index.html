@@ -16,20 +16,19 @@
     <div class="container images">
         <img-card
             @selected="imgSelect" 
-            v-for="img in images" 
             :img="img" 
+            v-for="img in images" 
         ></img-card>
     </div>
-    <div v-show="lastImgId !== lowestId" @click="getImages" class="moreImages">get more Images</div>
+    <div class="moreImages">
+        <div @click="getImages" v-show="lastImgId !== lowestId">
+            get more Images
+        </div>
+    </div>
     <img-modal
         v-if="focusId"
         :id="focusId"
         @close-modal="closeModal"></img-modal>
-    <!-- <modal
-        v-if="imgId"
-        :image-id="imgId"
-        @comment="addComment"
-        @close-modal="closeModal"></modal> -->
 </div>
 
 <script id="tmpl-img-upload" type="text/x-template">
