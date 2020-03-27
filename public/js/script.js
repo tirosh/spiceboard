@@ -12,32 +12,27 @@ console.log(`I'm not insane...`);
             focusId: null,
             images: [],
             lastImgId: 0,
-            pagecount: 0,
-            imageToUpload: {},
-            file: ''
+            lowestId: null,
+            pagecount: 0
         },
         mounted: function() {
-            var self = this;
-            axios
-                .get('/images')
-                .then(function(resp) {
-                    console.log('resp.data :', resp.data);
-                    self.images = resp.data;
-                    self.lastImgId = self.images[self.images.length - 1].id;
-                })
-                .catch(function(err) {
-                    console.log('Error in GET /images :', err);
-                });
+            this.getImages();
         },
         methods: {
-            getMoreImages: function() {
+            getImages: function() {
                 var self = this;
                 axios
                     .get('/images/' + self.lastImgId)
-                    .then(function(resp) {
-                        console.log('resp.data :', resp.data);
-                        self.images = self.images.concat(resp.data);
-                        self.lastImgId = self.images[self.images.length - 1].id;
+                    .then(function(imgs) {
+                        console.log('imgs.data :', imgs.data);
+                        var lastImg = imgs.data[imgs.data.length - 1];
+                        self.lowestId = lastImg.lowestId;
+                        console.log('lastImg.lowestId:', lastImg.lowestId);
+
+                        console.log('lastImgId before:', self.lastImgId);
+                        self.lastImgId = lastImg.id;
+                        console.log('lastImgId after :', self.lastImgId);
+                        self.images = self.images.concat(imgs.data);
                     })
                     .catch(function(err) {
                         console.log('Error in GET /images :', err);

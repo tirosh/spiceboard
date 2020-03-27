@@ -47,22 +47,28 @@ app.get('/image/:id', (req, res) => {
         });
 });
 
-app.get('/images', (req, res) => {
-    db.getImages()
-        .then(dbData => dbData.rows)
-        .then(imgData => {
-            // console.log('imgData :', imgData);
-            res.json(imgData);
-        });
-});
+// app.get('/images', (req, res) => {
+//     db.getImages()
+//         .then(dbData => dbData.rows)
+//         .then(imgData => {
+//             // console.log('imgData :', imgData);
+//             res.json(imgData);
+//         })
+//         .catch(err => {
+//             console.log('Error in GET /images: ', err);
+//             res.sendStatus(500);
+//         });
+// });
 
 app.get('/images/:lastImgId', (req, res) => {
-    console.log('req.params.lastImgId :', req.params.lastImgId);
-    db.getMoreImages(req.params.lastImgId)
+    db.getImages(req.params.lastImgId)
         .then(dbData => dbData.rows)
         .then(imgData => {
-            console.log('imgData :', imgData);
             res.json(imgData);
+        })
+        .catch(err => {
+            console.log('Error in GET /images/:lastImgId: ', err);
+            res.sendStatus(500);
         });
 });
 

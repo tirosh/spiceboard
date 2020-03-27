@@ -20,7 +20,7 @@
             :img="img" 
         ></img-card>
     </div>
-    <div @click="getMoreImages" class="moreImages">get more Images</div>
+    <div v-show="lastImgId !== lowestId" @click="getImages" class="moreImages">get more Images</div>
     <img-modal
         v-if="focusId"
         :id="focusId"
