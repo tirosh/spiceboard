@@ -45,6 +45,7 @@ console.log(`I'm not insane...`);
             closeModal: function() {
                 this.focusId = null;
                 location.hash = '';
+                history.replaceState(null, null, '/');
             }
         }
     });

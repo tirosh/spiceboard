@@ -17,6 +17,7 @@
         <img-card
             @selected="imgSelect" 
             :img="img" 
+            :key="img.id"
             v-for="img in images"
         ></img-card>
     </div>
@@ -35,7 +36,7 @@
     <div class="image upload ">
         <form>
             <div>
-                <input @change='onSelect' type="file" name="file" accept="image/*">
+                <input @change='onSelect' type="file" name="file" ref="file" accept="image/*">
             </div>
             <div>
                 <input v-model="title" name="title" placeholder="title">
@@ -43,14 +44,13 @@
                 <input v-model="user" name="user" placeholder="username">
             </div>
             <div>
-                <button @click="onSubmit">submit</button>    
+                <button @click.prevent="onSubmit">submit</button>    
             </div>
         </form>
     </div>
 </script>
 
 <script id="tmpl-img-card" type="text/x-template">
-    <!-- <div @click="select" class="card image"> -->
         <div class="card image">
             <div class="inner">
                 <div class="front">
@@ -58,7 +58,8 @@
                 </div>
                 <a :href="'#' + img.id">
                     <div class="back">
-                        <div class="description">{{img.desc}}</div>
+                        <h2 class="title">{{img.title}}</h2>
+                        <p class="description">{{img.description}}</p>
                     </div>
                 </a>
             </div>
@@ -71,7 +72,7 @@
         <h2>{{img.title}}</h2>
         <h4>{{img.description}}</h4>
         <p>Uploaded by {{img.username}} on {{img.created_at}}</p>
-        <img-comments :id="id"></img-comments>
+        <img-comments :id="id" :key="id"></img-comments>
         <div @click="close" class="close"></div>
     </div>
 </script>
@@ -80,9 +81,9 @@
     <div class="comment-wrapper">
         <h3>Add a comment</h3>
         <form>
-            <textarea v-model="comment" name="comment" placeholder="comment"></textarea>
+            <input v-model="comment" name="comment" placeholder="comment">
             <input v-model="user" name="user" placeholder="username">
-            <button @click="onSubmit">Submit</button>
+            <button @click.prevent="onSubmit">Submit</button>
         </form>
         <div v-if="comments != ''" class="comments">
             <h3>Comments</h3>

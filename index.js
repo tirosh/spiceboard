@@ -8,7 +8,6 @@ const conf = require('./config');
 
 app.use(express.json());
 
-///////// FILE UPLOAD BOILERPLATE //////////
 const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
@@ -30,7 +29,6 @@ const uploader = multer({
         fileSize: 2097152
     }
 });
-////////////////////////////////////////////
 
 app.use(express.static('./public'));
 
@@ -46,19 +44,6 @@ app.get('/image/:id', (req, res) => {
             res.sendStatus(500);
         });
 });
-
-// app.get('/images', (req, res) => {
-//     db.getImages()
-//         .then(dbData => dbData.rows)
-//         .then(imgData => {
-//             // console.log('imgData :', imgData);
-//             res.json(imgData);
-//         })
-//         .catch(err => {
-//             console.log('Error in GET /images: ', err);
-//             res.sendStatus(500);
-//         });
-// });
 
 app.get('/images/:lastImgId', (req, res) => {
     db.getImages(req.params.lastImgId)
@@ -84,29 +69,26 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
         });
 });
 
+app.get('/comments/:id', (req, res) => {
+    db.getComments(req.params.id)
+        .then(result => {
+            res.json(result.rows);
+        })
+        .catch(err => {
+            console.log('Error in GET /comments/:id: ', err);
+            res.sendStatus(500);
+        });
+});
+
 app.post('/comment', (req, res) => {
     const { id, user, comment } = req.body;
     console.log('req.body :', req.body);
     db.addComment(id, user, comment)
         .then(comment => {
-            // console.log('dbData.rows :', comment.rows);
             res.json(comment.rows[0]);
         })
         .catch(err => {
             console.log('Error in POST /comment: ', err);
-            res.sendStatus(500);
-        });
-});
-
-app.get('/comments/:id', (req, res) => {
-    // console.log('id: ', req.params.id);
-    db.getComments(req.params.id)
-        .then(result => {
-            // console.log('Comments from db: ', result.rows);
-            res.json(result.rows);
-        })
-        .catch(err => {
-            console.log('Error in GET /comments/:id: ', err);
             res.sendStatus(500);
         });
 });

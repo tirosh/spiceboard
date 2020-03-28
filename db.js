@@ -12,21 +12,10 @@ exports.getImage = id => {
         ORDER BY id DESC`;
     return db.query(q, [id]);
 };
-// exports.getImages = () => {
-//     const q = `
-//         SELECT *, (
-//             SELECT id FROM images
-//             ORDER BY id ASC
-//             LIMIT 1
-//         ) AS "lowestId" FROM images
-//         ORDER BY id DESC
-//         LIMIT 10`;
-//     return db.query(q);
-// };
 
 exports.getImages = lastImgId => {
     const q = `
-        SELECT url, title, id, (
+        SELECT id, url, title, description, (
             SELECT id FROM images
             ORDER BY id ASC
             LIMIT 1
@@ -34,7 +23,6 @@ exports.getImages = lastImgId => {
         ${lastImgId == 0 ? '' : 'WHERE id < $1'}
         ORDER BY id DESC
         LIMIT 12`;
-    console.log('query :', q);
     return lastImgId == 0 ? db.query(q) : db.query(q, [lastImgId]);
 };
 

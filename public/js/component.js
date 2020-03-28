@@ -34,7 +34,6 @@ var imgUpload = {
     },
     methods: {
         onSubmit: function(e) {
-            e.preventDefault();
             var self = this;
 
             var formData = new FormData();
@@ -48,7 +47,10 @@ var imgUpload = {
                 .then(function(resp) {
                     // always use kebab-case for event names
                     self.$emit('new-image', resp.data);
-                    self.$data.text = '';
+                    self.$refs.file.value = '';
+                    self.title = '';
+                    self.desc = '';
+                    self.user = '';
                 })
                 .catch(function(err) {
                     console.log('ERRR in POST /upload: ', err);
@@ -76,7 +78,6 @@ var comments = {
     },
     methods: {
         onSubmit: function(e) {
-            e.preventDefault();
             var self = this;
             axios
                 .post('/comment', {
@@ -86,7 +87,6 @@ var comments = {
                 })
                 .then(function() {
                     self.getComments();
-                    self.$data.text = '';
                 })
                 .catch(function(err) {
                     console.log('ERROR in POST /comment: ', err);
@@ -103,6 +103,8 @@ var comments = {
                             self.comments[i].created_at
                         );
                     }
+                    self.comment = '';
+                    self.user = '';
                 })
                 .catch(function(err) {
                     console.log('ERROR in GET /comments: ', err);
@@ -134,6 +136,7 @@ var imgModal = {
             axios
                 .get(`/image/${self.id}`)
                 .then(function(img) {
+                    if (img.data[0] === undefined) return self.close();
                     self.img = img.data[0];
                     self.img.created_at = formatDate(self.img.created_at);
                 })
