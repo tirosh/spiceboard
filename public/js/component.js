@@ -48,6 +48,7 @@ var imgUpload = {
                 .then(function(resp) {
                     // always use kebab-case for event names
                     self.$emit('new-image', resp.data);
+                    self.$data.text = '';
                 })
                 .catch(function(err) {
                     console.log('ERRR in POST /upload: ', err);
@@ -85,13 +86,11 @@ var comments = {
                 })
                 .then(function() {
                     self.getComments();
+                    self.$data.text = '';
                 })
                 .catch(function(err) {
                     console.log('ERROR in POST /comment: ', err);
                 });
-        },
-        onSelect: function(e) {
-            this.file = e.target.files[0];
         },
         getComments: function() {
             var self = this;
@@ -119,24 +118,29 @@ var imgModal = {
     },
     props: { id: Number }, // TODO: look into custom validation options
     data: function() {
-        return {
-            img: Object
-            // comments: Array
-        };
+        return { img: Object };
+    },
+    watch: {
+        id: function() {
+            this.getModalImage();
+        }
     },
     mounted: function() {
-        var self = this;
-        axios
-            .get(`/image/${self.id}`)
-            .then(function(img) {
-                self.img = img.data[0];
-                self.img.created_at = formatDate(self.img.created_at);
-            })
-            .catch(function(err) {
-                console.log('Error getting image: ', err);
-            });
+        this.getModalImage();
     },
     methods: {
+        getModalImage: function() {
+            var self = this;
+            axios
+                .get(`/image/${self.id}`)
+                .then(function(img) {
+                    self.img = img.data[0];
+                    self.img.created_at = formatDate(self.img.created_at);
+                })
+                .catch(function(err) {
+                    console.log('Error getting image: ', err);
+                });
+        },
         close: function() {
             this.$emit('close-modal');
         }

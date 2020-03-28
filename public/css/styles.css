@@ -76,7 +76,7 @@ input[type='text'] {
 }
 
 .card.image:hover > .inner {
-    /* transform: translateX(-100%) rotateY(180deg); */
+    transform: translateX(-100%) rotateY(180deg);
 }
 
 .front,

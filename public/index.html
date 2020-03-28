@@ -17,7 +17,7 @@
         <img-card
             @selected="imgSelect" 
             :img="img" 
-            v-for="img in images" 
+            v-for="img in images"
         ></img-card>
     </div>
     <div class="moreImages">
@@ -50,16 +50,19 @@
 </script>
 
 <script id="tmpl-img-card" type="text/x-template">
-    <div @click="select" class="card image">
-        <div class="inner">
-            <div class="front">
-                <img :src="img.url" :alt="img.title" width="300">
-            </div>
-            <div class="back">
-                <div class="description">{{img.desc}}</div>
+    <!-- <div @click="select" class="card image"> -->
+        <div class="card image">
+            <div class="inner">
+                <div class="front">
+                    <img :src="img.url" :alt="img.title" width="300">
+                </div>
+                <a :href="'#' + img.id">
+                    <div class="back">
+                        <div class="description">{{img.desc}}</div>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 </script>
 
 <script id="tmpl-img-modal" type="text/x-template">
@@ -77,7 +80,7 @@
     <div class="comment-wrapper">
         <h3>Add a comment</h3>
         <form>
-            <input v-model="comment" name="comment" placeholder="comment">
+            <textarea v-model="comment" name="comment" placeholder="comment"></textarea>
             <input v-model="user" name="user" placeholder="username">
             <button @click="onSubmit">Submit</button>
         </form>

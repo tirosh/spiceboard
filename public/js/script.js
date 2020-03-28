@@ -8,14 +8,17 @@ console.log(`I'm not insane...`);
             'img-modal': imgModal
         },
         data: {
-            // imgId: location.hash.slice(1),
-            focusId: null,
+            focusId: parseInt(location.hash.slice(1)),
             images: [],
             lastImgId: 0,
             lowestId: null,
             pagecount: 0
         },
         mounted: function() {
+            var self = this;
+            addEventListener('hashchange', function() {
+                self.focusId = parseInt(location.hash.slice(1));
+            });
             this.getImages();
         },
         methods: {
@@ -41,18 +44,8 @@ console.log(`I'm not insane...`);
             },
             closeModal: function() {
                 this.focusId = null;
+                location.hash = '';
             }
         }
     });
 })();
-
-/*
-- first, figure out the SMALLEST image id that's currrently onscreen
-
-- making the more button disappear if there are no more images to get from the
-  database
-
-- check to see if the lowest id you retrieved from the images table earlier
-  exists onscreen. if the lowest id you retrieved from the table exists on
-  screen, then hide the more button
-*/
