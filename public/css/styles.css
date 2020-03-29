@@ -198,11 +198,11 @@ textarea {
 }
 
 .more-images div {
-    margin: 10px;
+    margin: 10px 10px 20px 10px;
     cursor: pointer;
     padding: 0.25rem 0.5rem;
     background-color: #ec999d;
-    /* font-weight: 900; */
+    text-align: center;
 }
 
 .modal {
