@@ -9,11 +9,8 @@
 </head>
 <body>
 <div id="main" v-cloak>
-    <header>
-        <h1>Imageboard</h1>
-        <img-upload @new-image="imgAdd"></img-upload>
-    </header>
     <div class="container images">
+        <img-upload @new-image="imgAdd"></img-upload>
         <img-card
             @selected="imgSelect" 
             :img="img" 
@@ -33,19 +30,16 @@
 </div>
 
 <script id="tmpl-img-upload" type="text/x-template">
-    <div class="image upload ">
+    <div class="image upload">
         <form>
+            <h1 class="heading">Imageboard</h1>
             <div>
-                <input @change='onSelect' type="file" name="file" ref="file" accept="image/*">
+                <input v-model="title" name="title" placeholder="title" type="text">
+                <input v-model="user" name="user" placeholder="username" type="text">
             </div>
-            <div>
-                <input v-model="title" name="title" placeholder="title">
-                <input v-model="desc" name="desc" placeholder="description">    
-                <input v-model="user" name="user" placeholder="username">
-            </div>
-            <div>
-                <button @click.prevent="onSubmit">submit</button>    
-            </div>
+            <textarea v-model="desc" name="desc" placeholder="description" type="text"  maxlength="160"></textarea>
+            <input @change='onSelect' type="file" name="file" ref="file" accept="image/*">
+            <button @click.prevent="onSubmit">submit</button>    
         </form>
     </div>
 </script>
@@ -68,12 +62,19 @@
 
 <script id="tmpl-img-modal" type="text/x-template">
     <div class="modal">
-        <img :src="img.url" alt="img.title">
-        <h2>{{img.title}}</h2>
-        <h4>{{img.description}}</h4>
-        <p>Uploaded by {{img.username}} on {{img.created_at}}</p>
-        <img-comments :id="id" :key="id"></img-comments>
-        <div @click="close" class="close"></div>
+        <div class="wrapper">
+            <h1 class="heading">Imageboard</h1>
+            <div class="image">
+                <img :src="img.url" :alt="img.title">
+            </div>
+            <div class="info">
+                <h2>{{img.title}}</h2>
+                <h4>{{img.description}}</h4>
+                <p>Uploaded by {{img.username}} on {{img.created_at}}</p>
+            </div>
+            <img-comments :id="id" :key="id"></img-comments>
+            <div @click="close" class="close"></div>
+        </div>
     </div>
 </script>
 

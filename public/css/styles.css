@@ -1,12 +1,13 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    overflow: hidden;
 }
 
 body {
     min-height: 100vh;
     margin: 10px;
-    font-family: 'Nunito sans', sans-serif;
+    font-family: 'Nunito', sans-serif;
     background: linear-gradient(
         to bottom,
         rgba(100, 100, 100, 0.3) 0%,
@@ -19,37 +20,6 @@ body {
     display: none;
 }
 
-header {
-    display: inline-flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
-header h1,
-header form {
-    margin: 10px;
-}
-
-header form div {
-    /* margin-bottom: 1em; */
-}
-
-input,
-button {
-    font: inherit;
-    font-size: 1em;
-    line-height: 1.2;
-    white-space: nowrap;
-    text-decoration: none;
-    margin: 0.5em;
-    cursor: pointer;
-}
-input[type='text'] {
-    border: 1px solid gray;
-    border-radius: 0.15rem;
-    background: transparent;
-    padding: 0.25rem 0.5rem;
-}
-
 :focus {
     outline: none;
 }
@@ -57,8 +27,111 @@ input[type='text'] {
     display: inline-flex;
     flex-wrap: wrap;
 }
+
+.image.upload {
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    /* box-shadow: 10px 10px 0px 0px hsla(0, 0%, 0%, 0.25); */
+}
+
+.heading {
+    margin-bottom: 10px;
+    font-family: 'Nunito sans', sans-serif;
+    text-transform: uppercase;
+}
+
+.image.upload form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.image.upload form div {
+    display: flex;
+    justify-content: space-between;
+    /* margin: 10px 0; */
+}
+
+input,
+button {
+    font: inherit;
+    font-size: inherit;
+    line-height: 20px;
+    white-space: nowrap;
+    text-decoration: none;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+}
+
+input[name='title'],
+input[name='user'] {
+    width: 135px;
+    border-bottom: 1px solid grey;
+}
+
+input[type='file'] {
+    /* margin-bottom: 10px; */
+}
+input[type='file']::-webkit-file-upload-button {
+    visibility: hidden;
+}
+input[type='file']::before {
+    margin-bottom: 10px;
+}
+input[type='file']::before,
+button {
+    content: 'select file';
+    display: inline-block;
+    background-color: #99ecce;
+    border: 0;
+    padding: 0.1em 0.5rem;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    font-weight: 400;
+    /* box-shadow: 3px 3px 0px 0px hsla(0, 0%, 0%, 0.25); */
+}
+input[type='file']:hover::before {
+    border-color: black;
+}
+input[type='file']:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+button {
+    background-color: #ece999;
+}
+
+input[type='text'] {
+    /* border: 1px solid gray; */
+    /* border-radius: 0.15rem; */
+    background: transparent;
+    padding: 0.25rem 0.5rem;
+    border: 0;
+    /* border-bottom: 1px solid grey; */
+}
+
+textarea {
+    flex-grow: 1;
+    resize: none;
+    width: 280px;
+    font: inherit;
+    font-size: inherit;
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 10px;
+    border: 0;
+    /* border-bottom: 1px solid grey; */
+    /* border-top: 1px solid grey; */
+    background-color: #f1f1f1;
+}
+
 .card.image {
     width: 300px;
+    height: 300px;
     background-color: transparent;
     perspective: 200vw;
     margin: 10px;
@@ -66,13 +139,14 @@ input[type='text'] {
 }
 
 .inner {
-    position: relative;
-    width: 100%;
-    height: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     transition: transform 0.25s;
     transform-style: preserve-3d;
     transform-origin: center right;
-    top: 1em;
 }
 
 .card.image:hover > .inner {
@@ -82,8 +156,10 @@ input[type='text'] {
 .front,
 .back {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
 }
@@ -125,15 +201,33 @@ input[type='text'] {
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: crimson;
+    background-color: #ffffffe8;
+}
+
+.modal .wrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+img[class] {
+    width: 100%;
+}
+
+.modal .image {
+    flex-shrink: 1;
+    height: 62%;
 }
 
 .modal img {
-    width: 50%;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 
 .modal .close {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     width: 40px;
@@ -143,6 +237,7 @@ input[type='text'] {
 
 .comment-wrapper {
     border: 1px solid black;
+    flex-grow: 1;
 }
 
 .comment {
