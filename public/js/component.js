@@ -1,10 +1,11 @@
 function formatDate(ISOstring) {
-    return new Intl.DateTimeFormat('de-DE', {
+    return new Intl.DateTimeFormat('en-US', {
         weekday: 'short',
         day: 'numeric',
         hour: 'numeric',
         dayPeriod: 'short',
-        minute: 'numeric'
+        minute: 'numeric',
+        hour12: false
     }).format(new Date(ISOstring));
 }
 

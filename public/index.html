@@ -50,12 +50,11 @@
                 <div class="front">
                     <img :src="img.url" :alt="img.title" width="300">
                 </div>
-                <a :href="'#' + img.id">
-                    <div class="back">
-                        <h2 class="title">{{img.title}}</h2>
-                        <p class="description">{{img.description}}</p>
-                    </div>
-                </a>
+                <div class="back">
+                    <h2 class="title">{{img.title}}</h2>
+                    <p class="description">{{img.description}}</p>
+                    <a class="details" :href="'#' + img.id">details</a>
+                </div>
             </div>
         </div>
 </script>
@@ -70,8 +69,8 @@
             <div class="box">
                 <div class="info">
                     <h2>{{img.title}}</h2>
-                    <div class="author">by {{img.username}} on {{img.created_at}}</div>    
                     <p>{{img.description}}</p>
+                    <div class="author">by {{img.username}} on {{img.created_at}}</div>
                 </div>
                 <img-comments :id="id" :key="id"></img-comments>
                 <div @click="close" class="close">X</div>
