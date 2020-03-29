@@ -249,7 +249,7 @@ textarea {
 
 .modal .wrapper .box .info {
     flex-grow: 1;
-    /* width: 50%; */
+    max-width: 640px;
     margin: 10px;
 }
 .modal .info h2 {
@@ -263,7 +263,7 @@ textarea {
     margin: 10px;
     color: grey;
     font-style: italic;
-    text-align: right;
+    /* text-align: right; */
 }
 
 img[class] {
