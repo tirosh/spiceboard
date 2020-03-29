@@ -193,13 +193,16 @@ textarea {
     text-align: center;
 }
 
-.moreImages {
-    margin: 20px;
+.more-images {
     height: 1em;
 }
 
-.moreImages div {
+.more-images div {
+    margin: 10px;
     cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    background-color: #ec999d;
+    /* font-weight: 900; */
 }
 
 .modal {
@@ -208,15 +211,34 @@ textarea {
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: #ffffffe8;
+    background-color: #ffffff;
     overflow: auto;
 }
 
 .modal .wrapper {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90%;
+}
+.modal .heading {
+    margin: 10px;
+}
+
+.modal .wrapper .box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal .wrapper .box .info {
+    flex-grow: 1;
+    /* width: 50%; */
+    margin: 10px;
+}
+
+.modal .wrapper .box .info div {
+    display: flex;
+    justify-content: space-between;
 }
 
 img[class] {
@@ -224,8 +246,9 @@ img[class] {
 }
 
 .modal .image {
-    flex-shrink: 1;
+    /* flex-shrink: 1; */
     height: 62%;
+    margin: 10px;
 }
 
 .modal img {
@@ -235,17 +258,22 @@ img[class] {
 }
 
 .modal .close {
+    content: 'X';
     position: absolute;
     top: 20px;
     right: 20px;
     width: 40px;
     height: 40px;
-    background-color: black;
+    text-align: right;
+    font-size: 30px;
+    font-weight: 900;
+    cursor: pointer;
 }
 
 .comment-wrapper {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     flex-grow: 1;
+    margin: 10px;
 }
 
 .comment {
@@ -258,5 +286,24 @@ img[class] {
     /* overflow: scroll; */
 }
 .comments table {
-    /* overflow: scroll; */
+    width: 100%;
+}
+
+.comments th:nth-child(1) {
+    width: 60%;
+}
+.comments tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+.comments table th {
+    text-align: left;
+    text-transform: uppercase;
+    border-bottom: 1px solid grey;
+}
+.comments table td {
+    padding: 0.25rem 0.5rem;
+}
+.comments table .comment-form td {
+    padding: 0;
 }

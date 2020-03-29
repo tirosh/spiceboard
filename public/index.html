@@ -18,7 +18,7 @@
             v-for="img in images"
         ></img-card>
     </div>
-    <div class="moreImages">
+    <div class="more-images">
         <div @click="getImages" v-show="lastImgId !== lowestId">
             get more Images
         </div>
@@ -67,47 +67,46 @@
             <div class="image">
                 <img :src="img.url" :alt="img.title">
             </div>
-            <div class="info">
-                <h2>{{img.title}}</h2>
-                <h4>{{img.description}}</h4>
-                <p>Uploaded by {{img.username}} on {{img.created_at}}</p>
+            <div class="box">
+                <div class="info">
+                    <h2>{{img.title}}</h2>
+                    <div class="author">by {{img.username}} on {{img.created_at}}</div>    
+                    <p>{{img.description}}</p>
+                </div>
+                <img-comments :id="id" :key="id"></img-comments>
+                <div @click="close" class="close">X</div>
             </div>
-            <img-comments :id="id" :key="id"></img-comments>
-            <div @click="close" class="close"></div>
         </div>
     </div>
 </script>
 
 <script id="tmpl-comments" type="text/x-template">
     <div class="comment-wrapper">
-        <h3>Add a comment</h3>
         <form>
-            <input v-model="comment" name="comment" placeholder="comment">
-            <input v-model="user" name="user" placeholder="username">
-            <button @click.prevent="onSubmit">Submit</button>
-        </form>
-        <div v-if="comments != ''" class="comments">
-            <h3>Comments</h3>
+        <div class="comments">
             <div>
                 <table>
-                    <tr>
-                        <th>user</th>
+                    <thead>
+                        <tr>
                         <th>what</th>
+                        <th>who</th>
                         <th>when</th>
                     </tr>
+                    </thead>
                     <tr v-for="comment in comments">
-                        <td>{{comment.username}}</td>
                         <td>{{comment.comment}}</td>
+                        <td>{{comment.username}}</td>
                         <td>{{comment.created_at}}</td>
+                    </tr>
+                    <tr class="comment-form">
+                        <td><input v-model="comment" name="comment" placeholder="comment" type="text"></td>
+                        <td><input v-model="user" name="user" placeholder="username" type="text"></td>
+                        <td><button @click.prevent="onSubmit">Submit</button></td>
                     </tr>
                 </table>
             </div>
-        <!-- <div v-for="comment in comments" class="comment">
-                <div class="text">comment: {{comment.comment}}</div>
-                <div class="user">from: {{comment.username}}</div>
-                <div class="dateTime">date: {{comment.created_at}}</div>
-            </div> -->
         </div>
+        </form>
     </div>
 </script>
 
