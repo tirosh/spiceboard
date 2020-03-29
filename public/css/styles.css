@@ -1,12 +1,9 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    overflow: hidden;
 }
 
 body {
-    min-height: 100vh;
-    margin: 10px;
     font-family: 'Nunito', sans-serif;
     background: linear-gradient(
         to bottom,
@@ -14,6 +11,16 @@ body {
         rgb(255, 255, 255) 40%,
         rgba(116, 116, 116, 0.2) 100%
     );
+}
+
+#main {
+    height: 100vh;
+    overflow: auto;
+    padding: 10px;
+}
+
+#main .inactive {
+    overflow: hidden;
 }
 
 [v-cloak] {
@@ -24,7 +31,7 @@ body {
     outline: none;
 }
 .container.images {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
 }
 
@@ -202,6 +209,7 @@ textarea {
     bottom: 0;
     right: 0;
     background-color: #ffffffe8;
+    overflow: auto;
 }
 
 .modal .wrapper {
@@ -244,4 +252,11 @@ img[class] {
     display: flex;
     /* flex-direction: column; */
     justify-content: space-between;
+}
+
+.comments div {
+    /* overflow: scroll; */
+}
+.comments table {
+    /* overflow: scroll; */
 }

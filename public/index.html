@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 <body>
-<div id="main" v-cloak>
+<div id="main" v-cloak :class="{ inactive: focusId }">
     <div class="container images">
         <img-upload @new-image="imgAdd"></img-upload>
         <img-card
@@ -88,18 +88,20 @@
         </form>
         <div v-if="comments != ''" class="comments">
             <h3>Comments</h3>
-            <table>
-                <tr>
-                    <th>user</th>
-                    <th>what</th>
-                    <th>when</th>
-                </tr>
-                <tr v-for="comment in comments">
-                    <td>{{comment.username}}</td>
-                    <td>{{comment.comment}}</td>
-                    <td>{{comment.created_at}}</td>
-                </tr>
-            </table>
+            <div>
+                <table>
+                    <tr>
+                        <th>user</th>
+                        <th>what</th>
+                        <th>when</th>
+                    </tr>
+                    <tr v-for="comment in comments">
+                        <td>{{comment.username}}</td>
+                        <td>{{comment.comment}}</td>
+                        <td>{{comment.created_at}}</td>
+                    </tr>
+                </table>
+            </div>
         <!-- <div v-for="comment in comments" class="comment">
                 <div class="text">comment: {{comment.comment}}</div>
                 <div class="user">from: {{comment.username}}</div>
