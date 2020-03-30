@@ -100,3 +100,12 @@ app.use((err, req, res, next) => {
 
 if (require.main == module)
     app.listen(port, () => console.log(`I'm listening on port: ${port}`));
+
+/*  TODO
+    ---------------
+    - Add "Previous" and "Next" buttons
+    - Tags
+    - allow users to enter the url of an image
+      (make an http request to liberate the image from its host)
+    - Allow to delete images
+*/

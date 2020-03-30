@@ -2,9 +2,7 @@ const aws = require('aws-sdk');
 const fs = require('fs');
 
 const secrets =
-    process.env.NODE_ENV == 'production'
-        ? process.env // in prod the secrets are environment variables
-        : require('./secrets'); // in dev they are in secrets.json which is listed in .gitignore
+    process.env.NODE_ENV == 'production' ? process.env : require('./secrets');
 
 const s3 = new aws.S3({
     accessKeyId: secrets.AWS_KEY,
@@ -21,7 +19,7 @@ exports.upload = (req, res, next) => {
 
     const promise = s3
         .putObject({
-            Bucket: 'ategev', // change to my own bucketname
+            Bucket: 'ategev',
             ACL: 'public-read',
             Key: filename,
             Body: fs.createReadStream(path),
