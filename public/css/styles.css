@@ -236,7 +236,7 @@ textarea {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     height: 90%;
     max-width: 100vw;
 }
